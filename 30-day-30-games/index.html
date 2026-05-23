@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Days 30 Games Challenge</title>
+    <!-- Include the COI Service Worker to fix SharedArrayBuffer issues for Godot -->
+    <script src="coi-serviceworker.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="avatar-bg"></div>
+    <div class="container">
+        <header>
+            <h1 class="neon-text">30 Days 30 games Challenge</h1>
+        </header>
+        
+        <section class="banner-section">
+            <div class="banner"></div>
+        </section>
+
+        <main>
+            <div class="games-grid" id="games-grid">
+                <!-- Games will be injected by JS -->
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

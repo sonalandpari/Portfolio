@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Game - 30 Days 30 Games Challenge</title>
+    <!-- Include the COI Service Worker to fix SharedArrayBuffer issues for Godot -->
+    <script src="coi-serviceworker.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .game-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 2px solid var(--primary-neon);
+            box-shadow: 0 0 30px rgba(161, 0, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            margin-bottom: 1.5rem;
+            padding: 10px 20px;
+            background: rgba(10, 0, 20, 0.8);
+            border: 1px solid var(--secondary-neon);
+            color: var(--text-color);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--secondary-neon);
+            box-shadow: 0 0 15px var(--secondary-neon);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .iframe-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .loading-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-neon);
+            font-size: 1.5rem;
+            animation: pulsate 1.5s infinite alternate;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="avatar-bg"></div>
+    <div class="container">
+        <header>
+            <h1 class="neon-text" id="game-title">Loading Game...</h1>
+        </header>
+
+        <div class="game-container">
+            <a href="index.html" class="back-btn">&larr; Back to Challenge</a>
+            <div class="iframe-wrapper">
+                <div class="loading-text">Godot Engine Loading...</div>
+                <!-- This iframe will load the Godot exported HTML.
+                     Make sure your Godot exports are placed in an "exports" folder
+                     like: exports/game_1/index.html -->
+                <iframe id="game-frame" allow="autoplay; fullscreen" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameId = urlParams.get('id') || 1;
+            
+            // Set the title
+            document.getElementById('game-title').textContent = `Day ${gameId} Challenge`;
+            
+            // Set the iframe source to the exported Godot game index file.
+            // We assume the game exports are structured like "exports/game_1/index.html"
+            const frame = document.getElementById('game-frame');
+            frame.src = `exports/game_${gameId}/index.html`; 
+            
+            // Hide loading text when iframe loads
+            frame.onload = () => {
+                const loadingText = document.querySelector('.loading-text');
+                if (loadingText) loadingText.style.display = 'none';
+            };
+        });
+    </script>
+</body>
+</html>
